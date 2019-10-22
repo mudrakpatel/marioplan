@@ -1,3 +1,5 @@
+
+
 const initialState = {
     projects: [
         {id: 1, title: "Help me find peach!", content: "Here goes resources and plans to find Peach and save her...",},
@@ -7,10 +9,13 @@ const initialState = {
 };
 
 const projectReducer = (state = initialState, action) => {
-    return state;
-    /**switch(action.type){
-
-    }**/
+    switch(action.type){
+        case 'CREATE_PROJECT':
+            console.log('Created project: ', action.project);
+            return state;
+        default:
+            return state;
+    }
 }
 
 export default projectReducer;

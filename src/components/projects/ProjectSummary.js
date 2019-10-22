@@ -1,7 +1,7 @@
 import React from 'react';
 
 const ProjectSummary = ({project}) => {
-    const {title, content} = project;
+    const {title,} = project;
 
     return(
         <div className="card z-depth-0 project-summary">
