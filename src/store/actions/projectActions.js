@@ -1,4 +1,4 @@
-import {firestore} from '../../config/fbConfig';
+//import {firestore} from '../../config/fbConfig';
 
 export const createProject = (project) => {
     return (dispatch, getState, {
@@ -6,7 +6,7 @@ export const createProject = (project) => {
         getFirestore,
     }) => {
         //Make asynchronous call to database
-        //const firestore = getFirestore(); //This line might throw an error
+        const firestore = getFirestore(); //This line might throw an error
         //Access projects collection from firestore database
         //and add a new project to projects collection
         //in firestore database

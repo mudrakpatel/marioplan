@@ -1,5 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+//Connect this component to the firestoreReducer and firestore database
+import {firestoreConnect} from 'react-redux-firebase';
+//To use two Higher-Order-Components (HOCs) 
+//together for a single React Component
+import {compose} from 'redux';
 
 import Notifications from './Notifications';
 import ProjectList from '../projects/ProjectList';
@@ -42,10 +47,21 @@ class Dashboard extends Component{
      * **/
 const mapStateToProps = (state) => {
     return{
-        projects: state.project.projects,
+        //Firestore provides raw data
+        //as well as ordered data to
+        //to work with, we will use ordered
+        //data in Dashboard component here
+        projects: state.firestore.ordered.projects,
     }
 }
 
-export default connect(
-    mapStateToProps,
+export default compose(
+    connect(mapStateToProps),
+    firestoreConnect([
+        {
+            //Specify to which firestore database
+            //collection this component connects.
+            collection: 'projects',
+        }
+    ]),
 )(Dashboard);
