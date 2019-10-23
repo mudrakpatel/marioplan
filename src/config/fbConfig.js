@@ -14,8 +14,11 @@ import 'firebase/auth'; //Authentication
      measurementId: "G-NQVS716WTL"
  };
  // Initialize Firebase
- firebase.initializeApp(firebaseConfig);
- firebase.firestore().settings({timestampsInSnapshots: true,});
- firebase.analytics();
+//  firebase.initializeApp(firebaseConfig);
+//  firebase.firestore().settings({timestampsInSnapshots: true,});
+const firebaseApp = firebase.initializeApp(firebaseConfig);
+export const firestore = firebaseApp.firestore();
+export default firebase;
+ //firebase.analytics();
 
- export default firebase;
+//export default firebase;
