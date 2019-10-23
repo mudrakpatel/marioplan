@@ -1,5 +1,3 @@
-
-
 const initialState = {
     projects: [
         {id: 1, title: "Help me find peach!", content: "Here goes resources and plans to find Peach and save her...",},
