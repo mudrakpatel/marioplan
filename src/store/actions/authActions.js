@@ -4,9 +4,7 @@ export const signIn = (credentials) => {
         //Initialize firebase instance
         const firebase = getFirebase();
         //Sign in the user
-        firebase.
-        auth().
-        signInWithEmailAndPassword(
+        firebase.auth().signInWithEmailAndPassword(
             email,
             password,
         ).then(() => {
@@ -24,4 +22,17 @@ export const signIn = (credentials) => {
             });
         });
     }
+};
+
+export const signOut = () => {
+    return (dispatch, getState, {getFirebase}) => {
+        const firebase = getFirebase();
+        //Sign out user
+        firebase.auth().signOut().then(() => {
+            //Dispatch 'SIGNOUT_SUCCESS' action type
+            dispatch({
+                type: 'SIGNOUT_SUCCESS',
+            });
+        });
+    };
 };

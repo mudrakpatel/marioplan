@@ -1,6 +1,5 @@
 const initialState = {
     authError: null,
-
 };
 
 const authReducer = (state = initialState, action) => {
@@ -16,6 +15,9 @@ const authReducer = (state = initialState, action) => {
                 ...state,
                 authError: null,
             };
+        case 'SIGNOUT_SUCCESS':
+            console.log('Signout success');
+            return state;
         default:
             return state;
     }
