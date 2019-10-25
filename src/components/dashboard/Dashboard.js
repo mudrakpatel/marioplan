@@ -5,6 +5,7 @@ import {firestoreConnect} from 'react-redux-firebase';
 //To use two Higher-Order-Components (HOCs) 
 //together for a single React Component
 import {compose} from 'redux';
+import {Redirect} from 'react-router-dom';
 
 import Notifications from './Notifications';
 import ProjectList from '../projects/ProjectList';
@@ -16,20 +17,26 @@ class Dashboard extends Component{
          * within a component.
          * YOU DID IT! :)
          * **/
-        const {projects} = this.props;
+        const {projects, auth} = this.props;
 
-        return(
-            <div className="dashboard container">
-                <div className="row">
-                    <div className="col s12 m6">
-                        <ProjectList projects={projects}/>
-                    </div>
-                    <div className="col s12 m5 offset-m1">
-                        <Notifications/>
+        if(!auth.uid){
+            return(
+                <Redirect to='/signin'/>
+            );
+        } else {
+            return(
+                <div className="dashboard container">
+                    <div className="row">
+                        <div className="col s12 m6">
+                            <ProjectList projects={projects}/>
+                        </div>
+                        <div className="col s12 m5 offset-m1">
+                            <Notifications/>
+                        </div>
                     </div>
                 </div>
-            </div>
-        );
+            );
+        }
     };
 };
 
@@ -52,6 +59,7 @@ const mapStateToProps = (state) => {
         //to work with, we will use ordered
         //data in Dashboard component here
         projects: state.firestore.ordered.projects,
+        auth: state.firebase.auth,
     }
 }
 
