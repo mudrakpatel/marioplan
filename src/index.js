@@ -43,17 +43,22 @@ const store = createStore(rootReducer,
             getFirebase,
             getFirestore
         })),
-        reactReduxFirebase(fbConfig), // redux binding for firebase
-        reduxFirestore(fbConfig) // redux bindings for firestore
+        reactReduxFirebase(fbConfig, {
+            attachAuthIsReady: true,
+        }), // redux binding for firebase
+        reduxFirestore(fbConfig) // redux binding for firestore
     )
 );
 
-ReactDOM.render(
-    <Provider store={store}>
-        <App/>
-    </Provider>, document.getElementById('root'));
+store.firebaseAuthIsReady
+     .then(() => {
+        ReactDOM.render(
+            <Provider store={store}>
+                <App/>
+            </Provider>, document.getElementById('root'));
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+        // If you want your app to work offline and load faster, you can change
+        // unregister() to register() below. Note this comes with some pitfalls.
+        // Learn more about service workers: https://bit.ly/CRA-PWA
+        serviceWorker.unregister();
+     });
