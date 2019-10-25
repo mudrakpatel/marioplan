@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
 
+import {signUp} from '../../store/actions/authActions';
+
 class SignUp extends Component{
     state={
         firstName: '',
@@ -12,7 +14,7 @@ class SignUp extends Component{
 
     handleOnSubmit = (event) => {
         event.preventDefault();
-        console.log(this.state);
+        this.props.signUp(this.state);
     }
 
     handleOnChange = (event) => {
@@ -22,7 +24,7 @@ class SignUp extends Component{
     }
 
     render(){
-        const {auth} = this.props;
+        const {auth, authError} = this.props;
         if(!auth.uid){
             return(
                 <div className="container">
@@ -52,6 +54,22 @@ class SignUp extends Component{
                             <button className="btn pink lighten-1 z-depth-0">
                                 Sign Up
                             </button>
+                            < div className="red lighten-4 red-text center">
+                                {
+                                    authError ?
+                                    (
+                                        <h5 style={{
+                                                padding: '6px',
+                                                border: '1px solid red',
+                                                borderRadius: '5px',
+                                            }}>
+                                            {authError.message}
+                                        </h5>
+                                    ) : (
+                                        null
+                                    )
+                                }
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -67,9 +85,19 @@ class SignUp extends Component{
 const mapStateToProps = (state) => {
     return{
         auth: state.firebase.auth,
+        authError: state.auth.authError,
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        signUp: (newUser) => {
+            dispatch(signUp(newUser));
+        },
     }
 };
 
 export default connect(
     mapStateToProps,
+    mapDispatchToProps,
 )(SignUp);
