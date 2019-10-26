@@ -13,6 +13,8 @@ class CreateProject extends Component{
     handleOnSubmit = (event) => {
         event.preventDefault();
         this.props.createProject(this.state);
+        //Redirect user to the homepage
+        this.props.history.push('/');
     }
 
     handleOnChange = (event) => {

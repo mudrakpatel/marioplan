@@ -7,15 +7,20 @@ export const createProject = (project) => {
     }) => {
         //Make asynchronous call to database
         const firestore = getFirestore(); //This line might throw an error
+        //Access logged in users profile data
+        //using getState method
+        const profile = getState().firebase.profile;
+        //Access author ID i.e. logged in user ID
+        const authorId = getState().firebase.auth.uid;
         //Access projects collection from firestore database
         //and add a new project to projects collection
         //in firestore database
         firestore.collection('projects')
                  .add({
                      ...project,
-                     authorFirstName: 'Peter',
-                     authorLastName: 'Parker',
-                     authorId: 12345,
+                     authorFirstName: profile.firstName,
+                     authorLastName: profile.lastName,
+                     authorId: authorId,
                      createdAt: new Date(),
                  })
                  .then(() => {

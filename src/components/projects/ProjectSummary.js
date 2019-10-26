@@ -1,7 +1,7 @@
 import React from 'react';
 
 const ProjectSummary = ({project}) => {
-    const {title,} = project;
+    const {title, authorFirstName, authorLastName} = project;
 
     return(
         <div className="card z-depth-0 project-summary">
@@ -9,7 +9,7 @@ const ProjectSummary = ({project}) => {
                 <span className="card-title">
                     {title}
                 </span>
-                <p>Posted by Mudrak Patel</p>
+                <p>Posted by {authorFirstName} {authorLastName}</p>
                 <p className="grey-text">21st October, 2:00 pm</p>
             </div>
         </div>
