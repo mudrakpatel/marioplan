@@ -31,7 +31,7 @@ exports.projectCreated = functions
                         + " " +
                         project.authorLastName
                     }`,
-            time: admin.firestore().FieldValue.serverTimestamp(),
+            time: admin.firestore.FieldValue.serverTimestamp(),
         };
         //Return statement to end the function execution
         return createNotification(notification);
