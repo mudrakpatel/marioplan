@@ -1,7 +1,13 @@
 import React from 'react';
+import moment from 'moment';//To format dates in human readable form
 
 const ProjectSummary = ({project}) => {
-    const {title, authorFirstName, authorLastName} = project;
+    const {
+           title, 
+           authorFirstName, 
+           authorLastName,
+           createdAt,
+        } = project;
 
     return(
         <div className="card z-depth-0 project-summary">
@@ -10,7 +16,9 @@ const ProjectSummary = ({project}) => {
                     {title}
                 </span>
                 <p>Posted by {authorFirstName} {authorLastName}</p>
-                <p className="grey-text">21st October, 2:00 pm</p>
+                <p className="grey-text">
+                    {moment(createdAt.toDate()).calendar()}
+                </p>
             </div>
         </div>
     );
