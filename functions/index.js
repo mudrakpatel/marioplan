@@ -36,3 +36,29 @@ exports.projectCreated = functions
         //Return statement to end the function execution
         return createNotification(notification);
     });
+
+//Listen for a new user sign up event 
+//using the auth service of firebase
+exports.userJoined = functions
+    .auth
+    .user()
+    .onCreate(user => {
+        return admin
+            .firestore() //DO NOT forget parenthesis here
+            .collection('users')
+            .doc(user.uid)
+            .get()
+            .then(document => {
+               const newUser = document.data();
+               const notification = {
+                   content: 'New user signup',
+                   user: `${
+                       newUser.firstName
+                       + " " +
+                       newUser.lastName
+                   }`,
+                   time: admin.firestore.FieldValue.serverTimestamp(),
+               };
+               return createNotification(notification);
+            });
+    });
