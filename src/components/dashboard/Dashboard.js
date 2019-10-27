@@ -71,6 +71,10 @@ export default compose(
         //collection this component connects.
         {
             collection: 'projects',
+            orderBy: [
+                'createdAt',
+                'desc',
+            ],
         },
         {
             //Connect to notifications
@@ -79,6 +83,10 @@ export default compose(
             //data to 3 items
             collection: 'notifications',
             limit: 3,
+            orderBy: [
+                'time',
+                'desc',
+            ],
         },
     ]),
 )(Dashboard);
