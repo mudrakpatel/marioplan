@@ -4,9 +4,9 @@ const admin = require('firebase-admin');
 //Initialize the app
 admin.initializeApp(functions.config().firebase);
 
-exports.helloWorld = functions.https.onRequest((request, response) => {
- response.send("Hello from Firebase!");
-});
+// exports.helloWorld = functions.https.onRequest((request, response) => {
+//  response.send("Hello from Firebase!");
+// });
 
 const createNotification = (notification => {
     return admin
