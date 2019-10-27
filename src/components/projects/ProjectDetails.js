@@ -5,8 +5,18 @@ import {compose} from 'redux';
 import {Redirect} from 'react-router-dom';
 import moment from 'moment';
 
+import {deleteProject} from '../../store/actions/projectActions';
+
 const ProjectDetails = (props) => {
-    const {project, auth} = props;
+    const {project, auth, projectId, projectError,} = props;
+
+    const handleDeleteButtonOnClick = (projectId) => {
+        //console.log('Deleting project: ', projectId);
+        props.deleteProject(projectId);
+        //Redirect user to the Homepage
+        props.history.push('/');
+    };
+
     if(!auth.uid){
         return(
             <Redirect to='/signin'/>
@@ -30,6 +40,27 @@ const ProjectDetails = (props) => {
                             </div>
                         </div>
                     </div>
+                    < div className="red lighten-4 red-text center">
+                                {
+                                    projectError ?
+                                    (
+                                        <h5 style={{
+                                                padding: '6px',
+                                                border: '1px solid red',
+                                                borderRadius: '5px',
+                                            }}>
+                                            {projectError.message}
+                                        </h5>
+                                    ) : (
+                                        null
+                                    )
+                                }
+                            </div>
+                    <button
+                        onClick={() => handleDeleteButtonOnClick(projectId)}
+                        className="btn-floating btn-large red waves-effect">
+                        &#10006;
+                    </button>
                 </div>
             );
         } else{
@@ -49,11 +80,25 @@ const mapStateToProps = (state, ownProps) => {
     return{
         auth: state.firebase.auth,
         project: project,
+        projectId: id,
+        projectError: state.project.projectError,
     }
 };
 
+const mapDispatchToProps = (dispatch) => {
+    return{
+        deleteProject: (projectId) => {
+            dispatch(deleteProject(projectId));
+            //console.log('Deleting project: ', projectId);
+        },
+    };
+};
+
 export default compose(
-    connect(mapStateToProps),
+    connect(
+        mapStateToProps,
+        mapDispatchToProps,
+    ),
     firestoreConnect([
         {collection: 'projects'},
     ]),

@@ -37,3 +37,29 @@ export const createProject = (project) => {
                  });
     }
 };
+
+//Delete project
+export const deleteProject = (projectId) => {
+    return(dispatch, getState, {
+        getFirebase,
+        getFirestore,
+    }) => {
+        //Initialize firestore database instance
+        const firestore = getFirestore();
+        //Delete a project from firestore database
+        firestore.collection('projects')
+                 .doc(projectId)
+                 .delete()
+                 .then(() => {
+                    dispatch({
+                        type: 'DELETE_PROJECT_SUCCESS',
+                    });
+                 })
+                 .catch((err) => {
+                    dispatch({
+                        type: 'DELETE_PROJECT_ERROR',
+                        error: err,
+                    });
+                 });
+    }
+};
