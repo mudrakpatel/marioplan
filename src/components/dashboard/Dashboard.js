@@ -17,7 +17,7 @@ class Dashboard extends Component{
          * within a component.
          * YOU DID IT! :)
          * **/
-        const {projects, auth} = this.props;
+        const {projects, auth, notifications} = this.props;
 
         if(!auth.uid){
             return(
@@ -31,7 +31,7 @@ class Dashboard extends Component{
                             <ProjectList projects={projects}/>
                         </div>
                         <div className="col s12 m5 offset-m1">
-                            <Notifications/>
+                            <Notifications notifications={notifications}/>
                         </div>
                     </div>
                 </div>
@@ -60,16 +60,25 @@ const mapStateToProps = (state) => {
         //data in Dashboard component here
         projects: state.firestore.ordered.projects,
         auth: state.firebase.auth,
+        notifications: state.firestore.ordered.notifications,
     }
 }
 
 export default compose(
     connect(mapStateToProps),
     firestoreConnect([
+        //Specify to which firestore database
+        //collection this component connects.
         {
-            //Specify to which firestore database
-            //collection this component connects.
             collection: 'projects',
-        }
+        },
+        {
+            //Connect to notifications
+            //collection from firestore
+            //database and limit the
+            //data to 3 items
+            collection: 'notifications',
+            limit: 3,
+        },
     ]),
 )(Dashboard);
